@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -70,18 +71,42 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
+        String valueCapped = value.toUpperCase();
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
+            String aValuecapped = aValue.toUpperCase();
 
-            if (aValue.contains(value)) {
+            if (aValuecapped.contains(valueCapped)) {
                 jobs.add(row);
             }
         }
 
         return jobs;
+    }
+
+    public static ArrayList<HashMap<String, String>> findbyValue(String value) {
+
+        loadData();
+
+        String valueCapped = value.toUpperCase();
+        ArrayList<HashMap<String, String>> jorbs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+            for (Map.Entry<String, String> column : row.entrySet()) {
+                String aValue = column.getValue();
+                String aValuecapped = aValue.toUpperCase();
+
+                if (aValuecapped.contains(valueCapped)) {
+                    jorbs.add(row);
+                    break;
+                }
+            }
+        }
+
+        return jorbs;
     }
 
     /**
